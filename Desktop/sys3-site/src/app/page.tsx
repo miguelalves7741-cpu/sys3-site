@@ -10,6 +10,7 @@ import { Testimonials } from "../components/ui/Testimonials";
 import { FAQ } from "../components/ui/FAQ";
 import { LocationMap } from "../components/ui/LocationMap";
 import { Footer } from "../components/ui/Footer";
+import { PromoModal } from "../components/ui/PromoModal";
 
 // === LISTA DE FRASES DO HERO ===
 const heroPhrases = [
@@ -268,7 +269,7 @@ export default function Home() {
 
       {/* --- RODAPÉ E LEGAIS --- */}
       <Footer />
-
+       <PromoModal />
       <WhatsAppButton />
     </main>
   );
