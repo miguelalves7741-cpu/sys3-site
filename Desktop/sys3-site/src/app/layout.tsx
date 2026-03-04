@@ -16,17 +16,17 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.png", // Usando o icon.png que você tem na pasta public
   },
-  openGraph: {
+openGraph: {
     title: "Sys3 Telecom | A Evolução da Fibra Óptica",
     description: "Assine a internet com a maior estabilidade de João Pessoa. Wi-Fi 6 incluso e suporte 24h.",
-    url: "https://sys3telecom.com.br",
+    url: "https://sys3telecom.com.br", // Quando lançar oficialmente, esse será o link
     siteName: "Sys3 Telecom",
     images: [
       {
-        url: "/logo.svg",
+        url: "/banner.jpg", // <--- AQUI ESTÁ A MÁGICA (Aponte para o nome do arquivo que você colocou na pasta public)
         width: 1200,
         height: 630,
-        alt: "Logomarca Sys3 Telecom",
+        alt: "Banner Sys3 Telecom",
       },
     ],
     locale: "pt_BR",
