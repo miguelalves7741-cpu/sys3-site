@@ -23,7 +23,7 @@ openGraph: {
     siteName: "Sys3 Telecom",
     images: [
       {
-        url: "/banner.jpg", // <--- AQUI ESTÁ A MÁGICA (Aponte para o nome do arquivo que você colocou na pasta public)
+        url: "/banner.png", // <--- AQUI ESTÁ A MÁGICA (Aponte para o nome do arquivo que você colocou na pasta public)
         width: 1200,
         height: 630,
         alt: "Banner Sys3 Telecom",
