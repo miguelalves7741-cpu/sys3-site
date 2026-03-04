@@ -192,12 +192,12 @@ export default function Home() {
           
           <div className="relative max-w-full mx-auto group">
             
-            {/* Seta Lateral Esquerda */}
+         {/* Seta Lateral Esquerda */}
             <button 
               onClick={() => scroll('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-30 w-16 h-16 rounded-full bg-[#000000]/80 backdrop-blur-md border border-[#333333] hidden md:flex items-center justify-center text-[#E84818] hover:bg-[#E84818] hover:text-[#FFFFFF] transition-all duration-300 hover:scale-110 active:scale-95 shadow-[0_0_20px_rgba(0,0,0,0.8)] opacity-60 group-hover:opacity-100"
+              className="absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 z-[100] w-8 h-8 md:w-16 md:h-16 rounded-full bg-[#1a1a1a]/90 backdrop-blur-sm border border-[#E84818] md:border-2 flex items-center justify-center text-[#E84818] hover:bg-[#E84818] hover:text-[#FFFFFF] transition-all shadow-lg opacity-90"
             >
-              <svg className="w-8 h-8 pr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
+              <svg className="w-4 h-4 md:w-8 md:h-8 pr-0.5 md:pr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
             </button>
 
             {/* Container do Carrossel */}
@@ -245,12 +245,12 @@ export default function Home() {
               />
             </div>
 
-            {/* Seta Lateral Direita */}
+          {/* Seta Lateral Direita */}
             <button 
               onClick={() => scroll('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-30 w-16 h-16 rounded-full bg-[#000000]/80 backdrop-blur-md border border-[#333333] hidden md:flex items-center justify-center text-[#E84818] hover:bg-[#E84818] hover:text-[#FFFFFF] transition-all duration-300 hover:scale-110 active:scale-95 shadow-[0_0_20px_rgba(0,0,0,0.8)] opacity-60 group-hover:opacity-100"
+              className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 z-[100] w-8 h-8 md:w-16 md:h-16 rounded-full bg-[#1a1a1a]/90 backdrop-blur-sm border border-[#E84818] md:border-2 flex items-center justify-center text-[#E84818] hover:bg-[#E84818] hover:text-[#FFFFFF] transition-all shadow-lg opacity-90"
             >
-              <svg className="w-8 h-8 pl-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
+              <svg className="w-4 h-4 md:w-8 md:h-8 pl-0.5 md:pl-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
             </button>
           </div>
         </div>

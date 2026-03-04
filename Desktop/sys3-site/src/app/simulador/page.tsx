@@ -6,7 +6,8 @@ import { Footer } from "../../components/ui/Footer";
 
 export default function SimuladorPage() {
   return (
-    <main className="min-h-screen bg-[#000000] text-[#FFFFFF] selection:bg-[#E84818]/30 flex flex-col">
+    // AS DUAS CLASSES MÁGICAS ENTRARAM AQUI: select-none e overflow-x-hidden
+    <main className="min-h-screen bg-[#000000] text-[#FFFFFF] select-none overflow-x-hidden flex flex-col relative">
       
       {/* Puxando o Menu que já temos */}
       <Navbar status="operacional" statusMessage="Tudo funcionando perfeitamente." />
@@ -17,7 +18,7 @@ export default function SimuladorPage() {
         {/* Luz de fundo decorativa */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#E84818]/20 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="text-center mb-8 relative z-10">
+        <div className="text-center mb-8 relative z-10 cursor-default">
           <h1 className="text-4xl md:text-5xl font-black mb-4 uppercase tracking-tighter">
             Simulador de <span className="text-[#E84818]">Cobertura</span>
           </h1>
@@ -30,7 +31,7 @@ export default function SimuladorPage() {
         <div className="w-full max-w-5xl h-[850px] bg-[#f4f6f8] rounded-3xl overflow-hidden border border-[#333333] shadow-[0_0_40px_rgba(232,72,24,0.15)] relative z-10">
           <iframe 
             src="/simulador.html" 
-            className="w-full h-full border-none"
+            className="w-full h-full border-none pointer-events-auto"
             title="Simulador Wi-Fi Sys3"
           />
         </div>
