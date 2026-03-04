@@ -2,7 +2,6 @@
 <html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Simulador Wi-Fi - Sys3 Telecom</title>
     <style>
         /* --- VARIÁVEIS DE MARCA SYS3 --- */
@@ -18,10 +17,9 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            background-color: transparent; /* Alterado para mesclar com o site */
+            background-color: #f4f6f8; 
             color: var(--sys-dark);
-            margin: 0; 
-            padding: 10px;
+            margin: 20px; 
             overflow-x: hidden;
         }
 
@@ -32,17 +30,17 @@
             justify-content: center; align-items: center; z-index: 1000;
         }
         .modal-content {
-            background: #fff; padding: 30px; border-radius: 16px;
-            width: 90%; max-width: 420px; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: #fff; padding: 40px; border-radius: 16px;
+            width: 420px; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             text-align: center; border-top: 6px solid var(--sys-orange);
         }
-        .modal-content img { height: 50px; margin-bottom: 20px; }
-        .modal-content h3 { margin: 0 0 10px 0; color: #333; font-size: 20px; }
-        .modal-content p { color: #666; font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+        .modal-content img { height: 60px; margin-bottom: 20px; }
+        .modal-content h3 { margin: 0 0 10px 0; color: #333; font-size: 22px; }
+        .modal-content p { color: #666; font-size: 15px; margin-bottom: 30px; line-height: 1.5; }
 
-        .modal-actions { display: flex; flex-direction: column; gap: 10px; }
+        .modal-actions { display: flex; flex-direction: column; gap: 12px; }
         .btn-large {
-            padding: 14px; font-size: 15px; font-weight: bold; border: none; border-radius: 8px;
+            padding: 16px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px;
             cursor: pointer; transition: 0.2s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px;
         }
         .btn-primary { background: var(--sys-orange); color: #fff; box-shadow: 0 4px 10px rgba(242, 101, 34, 0.3); }
@@ -51,19 +49,20 @@
         .btn-secondary:hover { background: #cbd5e1; }
 
         /* --- CABEÇALHO E FERRAMENTAS --- */
+        .brand-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        .brand-header img { height: 45px; margin-bottom: 5px; }
+        .brand-header h2 { margin: 0; font-size: 16px; color: #555; text-transform: uppercase; }
+        
         #toolbar {
-            width: 100%; max-width: 800px; margin-bottom: 15px; background: #fff; border-radius: 12px;
+            width: 800px; margin-bottom: 20px; background: #fff; border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); display: flex; flex-direction: column;
             user-select: none; border-top: 4px solid var(--sys-orange);
         }
-        .toolbar-row { 
-            display: flex; align-items: center; flex-wrap: wrap; 
-            padding: 10px; border-bottom: 1px solid #eee; gap: 8px; justify-content: center;
-        }
+        .toolbar-row { display: flex; align-items: center; padding: 10px 15px; border-bottom: 1px solid #eee; gap: 8px; }
         .toolbar-row:last-child { border-bottom: none; background: #fafafa; }
-        .toolbar-label { font-size: 12px; font-weight: 700; color: #777; text-transform: uppercase; width: 100%; text-align: center; margin-bottom: 5px; }
+        .toolbar-label { font-size: 13px; font-weight: 700; color: #777; text-transform: uppercase; width: 140px; }
 
-        button { padding: 8px 10px; cursor: pointer; border: 2px solid transparent; border-radius: 6px; background: #f0f4f8; font-size: 12px; font-weight: 600; color: #444; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+        button { padding: 8px 12px; cursor: pointer; border: 2px solid transparent; border-radius: 6px; background: #f0f4f8; font-size: 14px; font-weight: 600; color: #444; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
         button:hover { background: #e2e8f0; border-color: #cbd5e1; }
         button.active { background: var(--sys-orange-light); color: var(--sys-orange); border-color: var(--sys-orange); }
         button.active-erase { background: #ffe6e6 !important; color: #dc3545 !important; border-color: #dc3545 !important; }
@@ -72,67 +71,70 @@
         
         button#btn-novo-projeto { background: var(--sys-orange); border-color: var(--sys-orange); color: white; font-weight: bold; }
         button#btn-novo-projeto:hover { background: var(--sys-orange-hover); }
+        
+        .divisor { border-left: 2px solid #ddd; height: 24px; margin: 0 10px; }
 
         #canvas-container { 
-            width: 100%; max-width: 800px;
             position: relative; background-color: white; border-radius: 8px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.12); overflow: hidden;
             background-image: radial-gradient(#d0d0d0 1px, transparent 1px);
             background-size: 20px 20px; background-position: center; background-repeat: no-repeat;
-            touch-action: none; /* Impede a tela de rolar enquanto o cliente desenha */
         }
-        
-        canvas { 
-            display: block; 
-            cursor: crosshair; 
-            width: 100%; /* Adapta para caber no celular */
-            height: auto; 
-            touch-action: none; 
-        }
+        canvas { display: block; cursor: crosshair; }
     </style>
 </head>
 <body>
 
     <div id="setup-modal">
         <div class="modal-content">
-            <img src="/logo-footer.svg" style="filter: invert(1); height: 40px;" alt="Sys3 Telecom">
+            <img src="https://sgp.sys3telecom.com.br/public/files/REF6TCO2TAG.png" alt="Sys3 Telecom">
             <h3>Simulador de Cobertura</h3>
             <p>Escolha um ponto de partida para analisar o sinal Wi-Fi no ambiente.</p>
             
             <div class="modal-actions">
-                <button class="btn-large btn-primary" onclick="gerarPlantaRealista()">🏚️ Carregar Planta Padrão</button>
-                <button class="btn-large btn-secondary" onclick="abrirUploadPlanta()">📂 Fazer Upload da Planta</button>
+                <button class="btn-large btn-primary" onclick="gerarPlantaRealista()">🏚️ Carregar Planta Real Padrão</button>
+                <button class="btn-large btn-secondary" onclick="abrirUploadPlanta()">📂 Fazer Upload da Minha Planta</button>
             </div>
         </div>
     </div>
     
+    <div class="brand-header">
+        <img src="https://sgp.sys3telecom.com.br/public/files/REF6TCO2TAG.png" alt="Sys3 Telecom">
+        <h2>Simulador de Cobertura Wi-Fi</h2>
+    </div>
+    
     <div id="toolbar">
         <div class="toolbar-row">
+            <span class="toolbar-label">Projeto</span>
             <input type="file" id="upload-planta" accept="image/*" style="display: none;">
             <button class="btn-action" id="btn-novo-projeto" title="Abre as opções iniciais">⚙️ Novo</button>
-            <button class="btn-action" id="btn-exportar" onclick="exportarImagem()" style="color: #198754; font-weight: bold;">📥 Salvar</button>
+            <button class="btn-action" id="btn-exportar" onclick="exportarImagem()" style="color: #198754; font-weight: bold;" title="Baixar imagem da simulação">📥 Salvar Imagem</button>
             
-            <button class="tool-btn active" data-tool="router">📡 Router</button>
+            <div class="divisor"></div>
+            
+            <button class="tool-btn active" data-tool="router">📡 Inserir Roteadores (Mesh)</button>
             <button class="tool-btn" data-tool="move" title="Mover itens">✋ Mover</button>
             <button class="tool-btn" data-tool="erase" title="Apagar itens">🧽 Apagar</button>
             
+            <div class="divisor"></div>
+            
             <button class="btn-action" id="btn-undo">↩️ Desfazer</button>
-            <button class="btn-action" id="btn-clear" style="color: #dc3545;">🗑️ Limpar</button>
+            <button class="btn-action" id="btn-clear" style="color: #dc3545;">🗑️ Limpar Mapa</button>
         </div>
 
         <div class="toolbar-row">
-            <span class="toolbar-label">Estruturas (Arrastar o dedo/mouse)</span>
+            <span class="toolbar-label">Estruturas (Arrastar)</span>
             <button class="tool-btn" data-tool="wall-alvenaria">🧱 Alvenaria</button>
-            <button class="tool-btn" data-tool="wall-madeira">🚪 Madeira</button>
+            <button class="tool-btn" data-tool="wall-madeira">🚪 Porta/Madeira</button>
             <button class="tool-btn" data-tool="wall-vidro">🪟 Vidro</button>
             <button class="tool-btn" data-tool="wall-ceramica">🚽 Cerâmica</button>
         </div>
 
         <div class="toolbar-row">
-            <span class="toolbar-label">Objetos (Clicar/Tocar)</span>
+            <span class="toolbar-label">Objetos (Clicar)</span>
             <button class="tool-btn" data-tool="obj-tv">📺 TV</button>
             <button class="tool-btn" data-tool="obj-geladeira">🧊 Geladeira</button>
-            <button class="tool-btn" data-tool="obj-microondas">📻 Micro</button>
+            <button class="tool-btn" data-tool="obj-microondas">📻 Micro-ondas</button>
             <button class="tool-btn" data-tool="obj-espelho">🪞 Espelho</button>
         </div>
     </div>
@@ -150,13 +152,13 @@
         heatmapCanvas.height = canvas.height / scaleFactor;
         const heatmapCtx = heatmapCanvas.getContext('2d');
 
-        let router = null;
+        // AGORA É UM ARRAY DE ROTEADORES PARA SUPORTAR REDE MESH
+        let routers = []; 
         let historicoAcoes = []; 
         let currentTool = 'router'; 
         let isDrawingWall = false;
         let currentWall = null;
         let dragItem = null;
-        
         let bgImageObject = null;
 
         const catalogo = {
@@ -185,7 +187,7 @@
             const reader = new FileReader();
             reader.onload = function(event) {
                 historicoAcoes = []; 
-                router = null;       
+                routers = [];       
                 const img = new Image();
                 img.onload = function() {
                     bgImageObject = img;
@@ -201,54 +203,42 @@
 
         function exportarImagem() {
             const exportCanvas = document.createElement('canvas');
-            exportCanvas.width = canvas.width;
-            exportCanvas.height = canvas.height;
+            exportCanvas.width = canvas.width; exportCanvas.height = canvas.height;
             const eCtx = exportCanvas.getContext('2d');
 
-            eCtx.fillStyle = '#ffffff';
-            eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+            eCtx.fillStyle = '#ffffff'; eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
 
             if (bgImageObject) {
                 const scale = Math.min(exportCanvas.width / bgImageObject.width, exportCanvas.height / bgImageObject.height);
-                const w = bgImageObject.width * scale;
-                const h = bgImageObject.height * scale;
-                const x = (exportCanvas.width - w) / 2;
-                const y = (exportCanvas.height - h) / 2;
+                const w = bgImageObject.width * scale; const h = bgImageObject.height * scale;
+                const x = (exportCanvas.width - w) / 2; const y = (exportCanvas.height - h) / 2;
                 eCtx.drawImage(bgImageObject, x, y, w, h);
             } else {
                 eCtx.fillStyle = '#d0d0d0';
                 for (let x = 0; x < exportCanvas.width; x += 20) {
                     for (let y = 0; y < exportCanvas.height; y += 20) {
-                        eCtx.beginPath();
-                        eCtx.arc(x, y, 1, 0, Math.PI * 2);
-                        eCtx.fill();
+                        eCtx.beginPath(); eCtx.arc(x, y, 1, 0, Math.PI * 2); eCtx.fill();
                     }
                 }
             }
 
             eCtx.drawImage(canvas, 0, 0);
 
-            eCtx.font = 'bold 16px sans-serif';
-            eCtx.textAlign = 'right';
+            eCtx.font = 'bold 16px sans-serif'; eCtx.textAlign = 'right';
             const text = 'Simulação - Sys3 Telecom';
             const textWidth = eCtx.measureText(text).width;
             eCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-            eCtx.beginPath();
-            eCtx.roundRect(exportCanvas.width - textWidth - 25, exportCanvas.height - 35, textWidth + 20, 30, 6);
-            eCtx.fill();
-            
-            eCtx.fillStyle = '#f26522'; 
-            eCtx.fillText(text, exportCanvas.width - 15, exportCanvas.height - 15);
+            eCtx.beginPath(); eCtx.roundRect(exportCanvas.width - textWidth - 25, exportCanvas.height - 35, textWidth + 20, 30, 6); eCtx.fill();
+            eCtx.fillStyle = '#f26522'; eCtx.fillText(text, exportCanvas.width - 15, exportCanvas.height - 15);
 
             const link = document.createElement('a');
             link.download = 'sys3-cobertura-wifi.png';
-            link.href = exportCanvas.toDataURL('image/png');
-            link.click();
+            link.href = exportCanvas.toDataURL('image/png'); link.click();
         }
 
         function gerarPlantaRealista() {
             historicoAcoes = [];
-            bgImageObject = null;
+            bgImageObject = null; 
             document.getElementById('canvas-container').style.backgroundImage = 'radial-gradient(#d0d0d0 1px, transparent 1px)';
             
             historicoAcoes = [
@@ -264,9 +254,11 @@
                 { type: 'wall', data: { x1: 400, y1: 500, x2: 340, y2: 500, material: 'alvenaria' } },
                 { type: 'wall', data: { x1: 340, y1: 500, x2: 260, y2: 500, material: 'madeira' } }, 
                 { type: 'wall', data: { x1: 260, y1: 500, x2: 100, y2: 500, material: 'alvenaria' } },
+
                 { type: 'wall', data: { x1: 260, y1: 100, x2: 260, y2: 280, material: 'ceramica' } }, 
                 { type: 'wall', data: { x1: 360, y1: 100, x2: 360, y2: 280, material: 'alvenaria' } }, 
                 { type: 'wall', data: { x1: 340, y1: 360, x2: 340, y2: 500, material: 'alvenaria' } }, 
+
                 { type: 'wall', data: { x1: 100, y1: 280, x2: 140, y2: 280, material: 'alvenaria' } },
                 { type: 'wall', data: { x1: 140, y1: 280, x2: 200, y2: 280, material: 'madeira' } }, 
                 { type: 'wall', data: { x1: 200, y1: 280, x2: 260, y2: 280, material: 'alvenaria' } },
@@ -276,6 +268,7 @@
                 { type: 'wall', data: { x1: 360, y1: 280, x2: 380, y2: 280, material: 'alvenaria' } },
                 { type: 'wall', data: { x1: 380, y1: 280, x2: 440, y2: 280, material: 'madeira' } }, 
                 { type: 'wall', data: { x1: 440, y1: 280, x2: 600, y2: 280, material: 'alvenaria' } },
+
                 { type: 'wall', data: { x1: 340, y1: 360, x2: 360, y2: 360, material: 'alvenaria' } },
                 { type: 'wall', data: { x1: 360, y1: 360, x2: 440, y2: 360, material: 'madeira' } }, 
                 { type: 'wall', data: { x1: 440, y1: 360, x2: 600, y2: 360, material: 'alvenaria' } },
@@ -283,15 +276,18 @@
                 { type: 'label', data: { x: 180, y: 190, text: 'COZINHA' } },
                 { type: 'object', data: { x: 230, y: 250, material: 'geladeira', size: 36 } },
                 { type: 'object', data: { x: 150, y: 130, material: 'microondas', size: 36 } },
+
                 { type: 'label', data: { x: 310, y: 190, text: 'WC' } },
                 { type: 'object', data: { x: 310, y: 130, material: 'espelho', size: 36 } },
+
                 { type: 'label', data: { x: 480, y: 190, text: 'QUARTO 1' } },
                 { type: 'label', data: { x: 470, y: 430, text: 'QUARTO 2' } },
-                { type: 'label', data: { x: 220, y: 390, text: 'SALA' } },
+
+                { type: 'label', data: { x: 220, y: 390, text: 'SALA DE ESTAR' } },
                 { type: 'object', data: { x: 120, y: 390, material: 'tv', size: 36 } },
             ];
 
-            router = { x: 310, y: 320 };
+            routers = [{ x: 310, y: 320 }]; // Roteador padrão no corredor
             document.getElementById('setup-modal').style.display = 'none';
             draw();
         }
@@ -304,9 +300,7 @@
 
         document.querySelectorAll('.tool-btn').forEach(btn => {
             btn.onclick = function() {
-                document.querySelectorAll('.tool-btn').forEach(b => {
-                    b.classList.remove('active'); b.classList.remove('active-erase');
-                });
+                document.querySelectorAll('.tool-btn').forEach(b => { b.classList.remove('active'); b.classList.remove('active-erase'); });
                 if (this.dataset.tool === 'erase') this.classList.add('active-erase');
                 else this.classList.add('active');
                 currentTool = this.dataset.tool;
@@ -315,7 +309,7 @@
         });
 
         document.getElementById('btn-clear').onclick = () => {
-            if (confirm('Limpar o mapa inteiro?')) { historicoAcoes = []; router = null; draw(); }
+            if (confirm('Limpar o mapa inteiro?')) { historicoAcoes = []; routers = []; draw(); }
         };
 
         document.getElementById('btn-undo').onclick = () => {
@@ -343,7 +337,11 @@
         }
 
         function getClickedItem(mouseX, mouseY) {
-            if (router && Math.hypot(mouseX - router.x, mouseY - router.y) <= 24) return { type: 'router', target: router };
+            // Verifica os múltiplos roteadores
+            for (let i = 0; i < routers.length; i++) {
+                if (Math.hypot(mouseX - routers[i].x, mouseY - routers[i].y) <= 24) return { type: 'router', index: i, target: routers[i] };
+            }
+            
             ctx.font = 'bold 14px sans-serif';
             for (let i = historicoAcoes.length - 1; i >= 0; i--) {
                 const item = historicoAcoes[i];
@@ -355,43 +353,64 @@
                 } else if (item.type === 'wall') {
                     const distSq = distToSegmentSquared({x: mouseX, y: mouseY}, {x: item.data.x1, y: item.data.y1}, {x: item.data.x2, y: item.data.y2});
                     if (distSq <= 64) return { type: 'item', index: i, target: item.data, isWall: true, isLabel: false };
+                } else if (item.type === 'label') {
+                    const textWidth = ctx.measureText(item.data.text).width;
+                    const halfW = textWidth / 2 + 8; const halfH = 12;
+                    if (mouseX >= item.data.x - halfW && mouseX <= item.data.x + halfW && mouseY >= item.data.y - halfH && mouseY <= item.data.y + halfH) {
+                        return { type: 'item', index: i, target: item.data, isWall: false, isLabel: true };
+                    }
                 }
             }
             return null;
         }
 
+        // --- DESENHO PRINCIPAL ---
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (router) generateAndDrawHeatmap();
+            if (routers.length > 0) generateAndDrawHeatmap();
             drawElements();
-            if (router) drawRouterIcon(); 
+            drawRouterIcons(); 
         }
 
+        // --- NOVO MAPA DE CALOR: SUPORTE A REDE MESH ---
         function generateAndDrawHeatmap() {
             const maxDist = 500;
             heatmapCtx.clearRect(0, 0, heatmapCanvas.width, heatmapCanvas.height);
+            
             for (let hx = 0; hx < heatmapCanvas.width; hx++) {
                 for (let hy = 0; hy < heatmapCanvas.height; hy++) {
                     const worldX = hx * scaleFactor; const worldY = hy * scaleFactor;
-                    const dx = worldX - router.x; const dy = worldY - router.y;
-                    const distance = Math.sqrt(dx*dx + dy*dy);
-                    let totalAtenuacao = 0;
                     
-                    for (let item of historicoAcoes) {
-                        if (item.type === 'wall') {
-                            if (intersects(router.x, router.y, worldX, worldY, item.data.x1, item.data.y1, item.data.x2, item.data.y2)) totalAtenuacao += catalogo[item.data.material].atenuacao;
-                        } else if (item.type === 'object') {
-                            if (rayIntersectsObject(router.x, router.y, worldX, worldY, item.data)) totalAtenuacao += catalogo[item.data.material].atenuacao;
+                    let bestIntensity = 0; // Armazena sempre o sinal mais forte de todos os roteadores
+
+                    // Calcula o sinal emitido por CADA roteador na tela
+                    for (let r of routers) {
+                        const dx = worldX - r.x; const dy = worldY - r.y;
+                        const distance = Math.sqrt(dx*dx + dy*dy);
+                        let totalAtenuacao = 0;
+                        
+                        for (let item of historicoAcoes) {
+                            if (item.type === 'wall') {
+                                if (intersects(r.x, r.y, worldX, worldY, item.data.x1, item.data.y1, item.data.x2, item.data.y2)) totalAtenuacao += catalogo[item.data.material].atenuacao;
+                            } else if (item.type === 'object') {
+                                if (rayIntersectsObject(r.x, r.y, worldX, worldY, item.data)) totalAtenuacao += catalogo[item.data.material].atenuacao;
+                            }
+                        }
+                        
+                        const effectiveDistance = distance + totalAtenuacao;
+                        if (effectiveDistance < maxDist) {
+                            const intensity = 1 - (effectiveDistance / maxDist);
+                            if (intensity > bestIntensity) bestIntensity = intensity; // Rede Mesh na veia!
                         }
                     }
-                    const effectiveDistance = distance + totalAtenuacao;
-                    if (effectiveDistance < maxDist) {
-                        const intensity = 1 - (effectiveDistance / maxDist);
+
+                    // Pinta o pixel com a cor do roteador que tem o melhor sinal ali
+                    if (bestIntensity > 0) {
                         let r, g, b;
-                        if (intensity > 0.6) { r = Math.floor(255 * (1 - intensity) * 2.5); g = 255; b = 0; } 
-                        else if (intensity > 0.3) { r = 255; g = Math.floor(255 * ((intensity - 0.3) / 0.3)); b = 0; } 
+                        if (bestIntensity > 0.6) { r = Math.floor(255 * (1 - bestIntensity) * 2.5); g = 255; b = 0; } 
+                        else if (bestIntensity > 0.3) { r = 255; g = Math.floor(255 * ((bestIntensity - 0.3) / 0.3)); b = 0; } 
                         else { r = 255; g = 0; b = 0; }
-                        heatmapCtx.fillStyle = `rgba(${r}, ${g}, ${b}, ${intensity * 0.85})`;
+                        heatmapCtx.fillStyle = `rgba(${r}, ${g}, ${b}, ${bestIntensity * 0.85})`;
                         heatmapCtx.fillRect(hx, hy, 1, 1);
                     }
                 }
@@ -399,16 +418,19 @@
             ctx.drawImage(heatmapCanvas, 0, 0, canvas.width, canvas.height);
         }
 
-        function drawRouterIcon() {
-            ctx.beginPath(); ctx.arc(router.x, router.y, 24, 0, Math.PI * 2); ctx.fillStyle = 'rgba(242, 101, 34, 0.2)'; ctx.fill();
-            ctx.beginPath(); ctx.arc(router.x, router.y, 14, 0, Math.PI * 2); ctx.fillStyle = 'rgba(242, 101, 34, 0.4)'; ctx.fill();
-            ctx.fillStyle = '#1f1f1f'; ctx.fillRect(router.x - 14, router.y - 6, 28, 12);
-            ctx.strokeStyle = '#333'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.beginPath();
-            ctx.moveTo(router.x - 10, router.y - 6); ctx.lineTo(router.x - 14, router.y - 16); 
-            ctx.moveTo(router.x + 10, router.y - 6); ctx.lineTo(router.x + 14, router.y - 16); ctx.stroke();
-            ctx.fillStyle = '#00ff00'; ctx.fillRect(router.x - 10, router.y - 2, 3, 3);
-            ctx.fillStyle = '#f26522'; ctx.fillRect(router.x - 2, router.y - 2, 3, 3);
-            ctx.fillStyle = '#f26522'; ctx.fillRect(router.x + 6, router.y - 2, 3, 3);
+        // Desenha todos os roteadores
+        function drawRouterIcons() {
+            for (let r of routers) {
+                ctx.beginPath(); ctx.arc(r.x, r.y, 24, 0, Math.PI * 2); ctx.fillStyle = 'rgba(242, 101, 34, 0.2)'; ctx.fill();
+                ctx.beginPath(); ctx.arc(r.x, r.y, 14, 0, Math.PI * 2); ctx.fillStyle = 'rgba(242, 101, 34, 0.4)'; ctx.fill();
+                ctx.fillStyle = '#1f1f1f'; ctx.fillRect(r.x - 14, r.y - 6, 28, 12);
+                ctx.strokeStyle = '#333'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.beginPath();
+                ctx.moveTo(r.x - 10, r.y - 6); ctx.lineTo(r.x - 14, r.y - 16); 
+                ctx.moveTo(r.x + 10, r.y - 6); ctx.lineTo(r.x + 14, r.y - 16); ctx.stroke();
+                ctx.fillStyle = '#00ff00'; ctx.fillRect(r.x - 10, r.y - 2, 3, 3);
+                ctx.fillStyle = '#f26522'; ctx.fillRect(r.x - 2, r.y - 2, 3, 3);
+                ctx.fillStyle = '#f26522'; ctx.fillRect(r.x + 6, r.y - 2, 3, 3);
+            }
         }
 
         function drawElements() {
@@ -422,8 +444,7 @@
                     if (dist > 30) { 
                         const mx = (w.x1 + w.x2) / 2; const my = (w.y1 + w.y2) / 2;
                         const nome = catalogo[w.material].nome;
-                        ctx.font = 'bold 10px sans-serif';
-                        const textWidth = ctx.measureText(nome).width;
+                        ctx.font = 'bold 10px sans-serif'; const textWidth = ctx.measureText(nome).width;
                         ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
                         ctx.beginPath(); ctx.roundRect(mx - (textWidth/2) - 4, my - 8, textWidth + 8, 16, 4); ctx.fill();
                         ctx.strokeStyle = catalogo[w.material].cor; ctx.lineWidth = 1; ctx.stroke();
@@ -449,29 +470,15 @@
             }
         }
 
-        // --- SISTEMA DE COORDENADAS PARA CELULAR (TOUCH) E MOUSE ---
-        function getPos(e) {
+        canvas.addEventListener('mousedown', function(e) {
+            if (e.button !== 0) return; 
             const rect = canvas.getBoundingClientRect();
-            let evt = e;
-            if (e.touches && e.touches.length > 0) { evt = e.touches[0]; }
-            else if (e.changedTouches && e.changedTouches.length > 0) { evt = e.changedTouches[0]; }
-            
-            // Aqui está a matemática que arruma o clique se a tela encolher!
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            
-            return {
-                x: (evt.clientX - rect.left) * scaleX,
-                y: (evt.clientY - rect.top) * scaleY
-            };
-        }
+            const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
 
-        function onInteractStart(e) {
-            if (e.type === 'mousedown' && e.button !== 0) return;
-            const pos = getPos(e);
-            const mouseX = pos.x; const mouseY = pos.y;
-
-            if (currentTool === 'router') { router = { x: mouseX, y: mouseY }; draw(); } 
+            if (currentTool === 'router') { 
+                routers.push({ x: mouseX, y: mouseY }); // Adiciona quantos roteadores quiser
+                draw(); 
+            } 
             else if (currentTool === 'move') {
                 const hit = getClickedItem(mouseX, mouseY);
                 if (hit) {
@@ -485,7 +492,8 @@
             else if (currentTool === 'erase') {
                 const hit = getClickedItem(mouseX, mouseY);
                 if (hit) {
-                    if (hit.type === 'router') router = null; else historicoAcoes.splice(hit.index, 1);
+                    if (hit.type === 'router') routers.splice(hit.index, 1); // Remove roteador específico
+                    else historicoAcoes.splice(hit.index, 1);
                     draw();
                 }
             }
@@ -496,13 +504,11 @@
                 const material = currentTool.split('-')[1];
                 historicoAcoes.push({ type: 'object', data: { x: mouseX, y: mouseY, material: material, size: catalogo[material].size } }); draw();
             }
-        }
+        });
 
-        function onInteractMove(e) {
-            if (e.type === 'touchmove') e.preventDefault(); 
-            const pos = getPos(e);
-            const mouseX = pos.x; const mouseY = pos.y;
-
+        canvas.addEventListener('mousemove', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
             if (isDrawingWall && currentWall) { currentWall.x2 = mouseX; currentWall.y2 = mouseY; draw(); }
             else if (dragItem && currentTool === 'move') {
                 if (dragItem.isWall) {
@@ -511,9 +517,9 @@
                 } else { dragItem.target.x = mouseX + dragItem.offX; dragItem.target.y = mouseY + dragItem.offY; }
                 draw(); 
             }
-        }
+        });
 
-        function onInteractEnd(e) {
+        canvas.addEventListener('mouseup', function(e) {
             if (isDrawingWall && currentWall) {
                 isDrawingWall = false;
                 const dist = Math.sqrt(Math.pow(currentWall.x2 - currentWall.x1, 2) + Math.pow(currentWall.y2 - currentWall.y1, 2));
@@ -521,19 +527,9 @@
                 currentWall = null; draw();
             }
             if (dragItem) { dragItem = null; updateCursor(); draw(); }
-        }
-
-        // --- LIGANDO OS EVENTOS DE MOUSE E TOQUE (CELULAR) ---
-        canvas.addEventListener('mousedown', onInteractStart);
-        canvas.addEventListener('touchstart', onInteractStart, { passive: false });
-        
-        canvas.addEventListener('mousemove', onInteractMove);
-        canvas.addEventListener('touchmove', onInteractMove, { passive: false });
-        
-        canvas.addEventListener('mouseup', onInteractEnd);
-        canvas.addEventListener('touchend', onInteractEnd);
-        
+        });
         canvas.addEventListener('contextmenu', e => e.preventDefault());
+        
         window.onload = () => document.getElementById('setup-modal').style.display = 'flex';
     </script>
 </body>
