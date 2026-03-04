@@ -19,16 +19,9 @@ export const metadata: Metadata = {
 openGraph: {
     title: "Sys3 Telecom | A Evolução da Fibra Óptica",
     description: "Assine a internet com a maior estabilidade de João Pessoa. Wi-Fi 6 incluso e suporte 24h.",
-    url: "https://sys3telecom.com.br", // Quando lançar oficialmente, esse será o link
+    url: "https://sys3telecom.com.br", 
     siteName: "Sys3 Telecom",
-    images: [
-      {
-        url: "/banner.png", // <--- AQUI ESTÁ A MÁGICA (Aponte para o nome do arquivo que você colocou na pasta public)
-        width: 1200,
-        height: 630,
-        alt: "Banner Sys3 Telecom",
-      },
-    ],
+    // APAGUE O BLOCO 'images' QUE ESTAVA AQUI
     locale: "pt_BR",
     type: "website",
   },
