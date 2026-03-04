@@ -8,10 +8,10 @@ export const PromoModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Mudei o nome da chave para garantir que o navegador não use o cache antigo
+    // Chave de memória para o navegador lembrar se o cliente já viu a promoção
     const hasSeenPromo = localStorage.getItem("sys3_promo_teste_final"); 
     
-    // Se não tiver a chave na memória, abre em apenas meio segundo (500ms)
+    // Se não tiver a chave na memória, abre o modal em meio segundo (500ms)
     if (!hasSeenPromo) {
       const timer = setTimeout(() => {
         setIsOpen(true);
@@ -22,7 +22,7 @@ export const PromoModal = () => {
 
   const handleClose = () => {
     setIsOpen(false);
-    // Grava na memória que o usuário fechou
+    // Grava na memória que o usuário fechou ou clicou no link
     localStorage.setItem("sys3_promo_teste_final", "true");
   };
 
@@ -54,31 +54,33 @@ export const PromoModal = () => {
               </svg>
             </button>
 
-            {/* ÁREA DA IMAGEM PROMOCIONAL */}
-           {/* ÁREA DA IMAGEM PROMOCIONAL AJUSTADA */}
-            <div className="relative w-full bg-[#0a0a0a] flex justify-center">
-              {/* Usando w-full e h-auto para a imagem não ser cortada e manter a proporção real */}
+            {/* ÁREA DA IMAGEM PROMOCIONAL BLINDADA CONTRA CORTES */}
+            <div className="relative w-full h-[320px] sm:h-[400px] bg-[#0a0a0a]">
               <Image 
-                src="/promo.png" // ATENÇÃO: Confirme aqui se o seu arquivo é .jpg ou .png
+                src="/promo.png" // IMPORTANTE: Se o seu arquivo for .png, troque para /promo.png
                 alt="Promoção Especial Sys3" 
-                width={800}
-                height={800}
-                className="w-full h-auto max-h-[55vh] object-contain"
+                fill 
+                className="object-contain p-2"
                 priority
               />
             </div>
-            {/* ÁREA DE AÇÃO (TEXTO E BOTÃO) */}
+
+            {/* ÁREA DE AÇÃO (TEXTO E BOTÃO DO WHATSAPP) */}
             <div className="p-6 text-center relative z-10 bg-gradient-to-t from-[#000000] to-[#0a0a0a]">
               <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">
                 Não Perca Essa <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E84818] to-[#EB6410]">Chance!</span>
               </h3>
               
-              <button
+              {/* BOTÃO DIRECIONANDO PARA O WHATSAPP DE VENDAS */}
+              <a
+                href="https://wa.me/558330455368?text=Ol%C3%A1%2C%20vi%20a%20oferta%20promocional%20de%20600%20Megas%20no%20site%20e%20gostaria%20de%20garantir%20a%20minha%20instala%C3%A7%C3%A3o%20gr%C3%A1tis!"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={handleClose}
                 className="block w-full py-4 mt-4 rounded-xl bg-gradient-to-r from-[#E84818] to-[#EB6410] text-white font-black text-lg uppercase tracking-wide hover:scale-105 active:scale-95 transition-transform shadow-[0_0_20px_rgba(232,72,24,0.4)]"
               >
                 Garantir Oferta
-              </button>
+              </a>
               
               <button onClick={handleClose} className="mt-4 text-xs text-[#666666] hover:text-[#D2D2D2] transition-colors underline decoration-[#333333]">
                 Agora não, talvez depois.
