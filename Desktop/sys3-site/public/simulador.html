@@ -208,11 +208,12 @@
             link.download = 'sys3-cobertura.png'; link.href = exportCanvas.toDataURL('image/png'); link.click();
         }
 
-        function gerarPlantaRealista() {
+      function gerarPlantaRealista() {
             historicoAcoes = []; bgImageObject = null; 
             document.getElementById('canvas-container').style.backgroundImage = 'radial-gradient(#d0d0d0 1px, transparent 1px)';
             
             historicoAcoes = [
+                // Bordas Externas
                 { type: 'wall', data: { x1: 100, y1: 100, x2: 600, y2: 100, material: 'alvenaria' } }, 
                 { type: 'wall', data: { x1: 100, y1: 100, x2: 100, y2: 350, material: 'alvenaria' } },
                 { type: 'wall', data: { x1: 100, y1: 350, x2: 100, y2: 450, material: 'vidro' } }, 
@@ -225,14 +226,35 @@
                 { type: 'wall', data: { x1: 400, y1: 500, x2: 340, y2: 500, material: 'alvenaria' } },
                 { type: 'wall', data: { x1: 340, y1: 500, x2: 260, y2: 500, material: 'madeira' } }, 
                 { type: 'wall', data: { x1: 260, y1: 500, x2: 100, y2: 500, material: 'alvenaria' } },
+
+                // Paredes Verticais Internas
                 { type: 'wall', data: { x1: 260, y1: 100, x2: 260, y2: 280, material: 'ceramica' } }, 
                 { type: 'wall', data: { x1: 360, y1: 100, x2: 360, y2: 280, material: 'alvenaria' } }, 
                 { type: 'wall', data: { x1: 340, y1: 360, x2: 340, y2: 500, material: 'alvenaria' } }, 
+
+                // Paredes Horizontais (Divisa Sala/Cozinha e Corredor) - AS QUE EU TINHA APAGADO!
+                { type: 'wall', data: { x1: 100, y1: 280, x2: 140, y2: 280, material: 'alvenaria' } },
+                { type: 'wall', data: { x1: 140, y1: 280, x2: 200, y2: 280, material: 'madeira' } }, 
+                { type: 'wall', data: { x1: 200, y1: 280, x2: 260, y2: 280, material: 'alvenaria' } },
+                { type: 'wall', data: { x1: 260, y1: 280, x2: 280, y2: 280, material: 'alvenaria' } },
+                { type: 'wall', data: { x1: 280, y1: 280, x2: 340, y2: 280, material: 'madeira' } }, 
+                { type: 'wall', data: { x1: 340, y1: 280, x2: 360, y2: 280, material: 'alvenaria' } },
+                { type: 'wall', data: { x1: 360, y1: 280, x2: 380, y2: 280, material: 'alvenaria' } },
+                { type: 'wall', data: { x1: 380, y1: 280, x2: 440, y2: 280, material: 'madeira' } }, 
+                { type: 'wall', data: { x1: 440, y1: 280, x2: 600, y2: 280, material: 'alvenaria' } },
+                { type: 'wall', data: { x1: 340, y1: 360, x2: 360, y2: 360, material: 'alvenaria' } },
+                { type: 'wall', data: { x1: 360, y1: 360, x2: 440, y2: 360, material: 'madeira' } }, 
+                { type: 'wall', data: { x1: 440, y1: 360, x2: 600, y2: 360, material: 'alvenaria' } },
+
+                // Labels e Objetos (Móveis)
                 { type: 'label', data: { x: 180, y: 190, text: 'COZINHA' } },
+                { type: 'object', data: { x: 230, y: 250, material: 'geladeira', size: 36 } },
+                { type: 'object', data: { x: 150, y: 130, material: 'microondas', size: 36 } },
                 { type: 'label', data: { x: 310, y: 190, text: 'WC' } },
+                { type: 'object', data: { x: 310, y: 130, material: 'espelho', size: 36 } },
                 { type: 'label', data: { x: 480, y: 190, text: 'QUARTO 1' } },
                 { type: 'label', data: { x: 470, y: 430, text: 'QUARTO 2' } },
-                { type: 'label', data: { x: 220, y: 390, text: 'SALA' } },
+                { type: 'label', data: { x: 220, y: 390, text: 'SALA DE ESTAR' } },
                 { type: 'object', data: { x: 120, y: 390, material: 'tv', size: 36 } },
             ];
             routers = [{ x: 310, y: 320 }]; 
