@@ -23,11 +23,11 @@
         .hide-scroll::-webkit-scrollbar-track { background: #111; border-radius: 4px; }
         .hide-scroll::-webkit-scrollbar-thumb { background: #E84818; border-radius: 4px; }
 
-        /* Canvas Grid Dark Mode */
-        #canvas-wrapper { overflow: auto; max-width: 100%; border-radius: 16px; border: 1px solid #333; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        /* Canvas Grid LIGHT MODE (Fundo Branco para a planta) */
+        #canvas-wrapper { overflow: auto; max-width: 100%; border-radius: 16px; border: 1px solid #333; box-shadow: 0 10px 40px rgba(0,0,0,0.5); background-color: #ffffff;}
         #canvas-container { 
-            position: relative; background-color: #050505; 
-            background-image: radial-gradient(#333 1px, transparent 1px);
+            position: relative; background-color: #ffffff; 
+            background-image: radial-gradient(#d0d0d0 1px, transparent 1px);
             background-size: 20px 20px; background-position: center; 
         }
         canvas { display: block; cursor: crosshair; touch-action: none; }
@@ -47,8 +47,17 @@
         <div class="bg-[#0a0a0a] border border-sysBorder p-8 rounded-2xl w-full max-w-md shadow-[0_0_50px_rgba(232,72,24,0.3)] text-center relative overflow-hidden">
             <div class="absolute -top-20 -left-20 w-40 h-40 bg-sysOrange rounded-full blur-[80px] opacity-30 pointer-events-none"></div>
             <h3 class="text-3xl font-black uppercase tracking-tight text-white mb-2">Simulador <span class="text-sysOrange">Wi-Fi</span></h3>
-            <p class="text-[#D2D2D2] text-sm mb-8 leading-relaxed">Desenhe suas paredes ou use uma planta base para ver como o sinal da Sys3 se comporta na sua casa.</p>
+            <p class="text-[#D2D2D2] text-sm mb-6 leading-relaxed">Desenhe suas paredes ou use uma planta base para ver como o sinal se comporta.</p>
             
+            <div class="mb-6 text-left relative z-10">
+                <label class="block text-[#D2D2D2] text-xs font-bold mb-3 uppercase tracking-wide text-center">Quantos Roteadores (Mesh) você precisa?</label>
+                <div class="flex gap-2" id="router-qty-selector">
+                    <button class="qty-btn flex-1 py-3 rounded-xl border-2 border-sysOrange bg-sysOrange/20 text-white font-black transition-all" data-val="1">1</button>
+                    <button class="qty-btn flex-1 py-3 rounded-xl border border-sysBorder bg-[#1a1a1a] text-[#D2D2D2] font-bold hover:border-sysOrange/50 transition-all" data-val="2">2</button>
+                    <button class="qty-btn flex-1 py-3 rounded-xl border border-sysBorder bg-[#1a1a1a] text-[#D2D2D2] font-bold hover:border-sysOrange/50 transition-all" data-val="3">3</button>
+                </div>
+            </div>
+
             <div class="flex flex-col gap-4 relative z-10">
                 <button onclick="gerarPlantaRealista()" class="w-full py-4 rounded-xl bg-gradient-to-r from-sysOrange to-[#EB6410] text-white font-bold text-sm uppercase tracking-wide hover:scale-105 transition-transform shadow-lg flex justify-center items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -70,6 +79,9 @@
                 <button id="btn-novo-projeto" class="bg-sysOrange text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase hover:bg-orange-600 transition-colors">Novo</button>
                 <button onclick="exportarImagem()" class="bg-[#1a1a1a] border border-sysBorder text-green-400 px-3 py-1.5 rounded-lg text-xs font-bold uppercase hover:border-green-400 transition-colors">Salvar</button>
             </div>
+            <div class="flex gap-2 text-xs text-sysOrange font-bold flex items-center" id="contador-roteadores">
+                Roteadores: 0/1
+            </div>
             <div class="flex gap-2">
                 <button id="btn-undo" class="text-[#D2D2D2] hover:text-white text-xs px-2 py-1">↩️ Desfazer</button>
                 <button id="btn-clear" class="text-red-400 hover:text-red-300 text-xs px-2 py-1">🗑️ Limpar</button>
@@ -78,7 +90,7 @@
 
         <div class="flex gap-2 overflow-x-auto hide-scroll pb-1 px-2 items-center">
             <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest min-w-max mr-2">Ferramentas:</span>
-            <button class="tool-btn active min-w-max px-3 py-2 rounded-lg border border-sysBorder bg-[#1a1a1a] text-sm font-medium text-gray-300" data-tool="router">📡 Roteador (Mesh)</button>
+            <button class="tool-btn active min-w-max px-3 py-2 rounded-lg border border-sysBorder bg-[#1a1a1a] text-sm font-medium text-gray-300" data-tool="router">📡 Roteador</button>
             <button class="tool-btn min-w-max px-3 py-2 rounded-lg border border-sysBorder bg-[#1a1a1a] text-sm font-medium text-gray-300" data-tool="move">✋ Mover</button>
             <button class="tool-btn min-w-max px-3 py-2 rounded-lg border border-sysBorder bg-[#1a1a1a] text-sm font-medium text-gray-300" data-tool="erase">🧽 Apagar</button>
             
@@ -105,7 +117,6 @@
     </div>
 
     <script>
-        // O CÓDIGO JS SE MANTÉM, MAS COM AJUSTES DE TOQUE E CORES DARK MODE
         const canvas = document.getElementById('planta');
         const ctx = canvas.getContext('2d');
         const scaleFactor = 4; 
@@ -116,11 +127,12 @@
 
         let routers = []; let historicoAcoes = []; let currentTool = 'router'; 
         let isDrawingWall = false; let currentWall = null; let dragItem = null; let bgImageObject = null;
+        let maxRouters = 1; // Variável de controle de quantidade
 
-        // Cores adaptadas para o Dark Mode
+        // Cores restauradas para Fundo Branco (Light Mode)
         const catalogo = {
-            'alvenaria': { atenuacao: 150, cor: '#888888', nome: 'Alvenaria' },
-            'madeira':   { atenuacao: 60,  cor: '#A0522D', nome: 'Madeira' },
+            'alvenaria': { atenuacao: 150, cor: '#555555', nome: 'Alvenaria' },
+            'madeira':   { atenuacao: 60,  cor: '#8B4513', nome: 'Madeira' },
             'vidro':     { atenuacao: 40,  cor: '#87CEFA', nome: 'Vidro' },
             'ceramica':  { atenuacao: 250, cor: '#4682B4', nome: 'Cerâmica' },
             'tv':        { atenuacao: 350, cor: '#2F4F4F', icone: '📺', size: 36 },
@@ -128,6 +140,22 @@
             'microondas':{ atenuacao: 750, cor: '#8B008B', icone: '📻', size: 36 },
             'espelho':   { atenuacao: 600, cor: '#A9A9A9', icone: '🪞', size: 36 }
         };
+
+        // Lógica dos Botões de Seleção de Quantidade
+        document.querySelectorAll('.qty-btn').forEach(btn => {
+            btn.onclick = function() {
+                document.querySelectorAll('.qty-btn').forEach(b => {
+                    b.className = 'qty-btn flex-1 py-3 rounded-xl border border-sysBorder bg-[#1a1a1a] text-[#D2D2D2] font-bold hover:border-sysOrange/50 transition-all';
+                });
+                this.className = 'qty-btn flex-1 py-3 rounded-xl border-2 border-sysOrange bg-sysOrange/20 text-white font-black transition-all';
+                maxRouters = parseInt(this.dataset.val);
+                atualizarContadorUI();
+            }
+        });
+
+        function atualizarContadorUI() {
+            document.getElementById('contador-roteadores').innerText = `Roteadores: ${routers.length}/${maxRouters}`;
+        }
 
         document.getElementById('btn-novo-projeto').onclick = () => document.getElementById('setup-modal').style.display = 'flex';
         function abrirUploadPlanta() { document.getElementById('setup-modal').style.display = 'none'; document.getElementById('upload-planta').click(); }
@@ -142,7 +170,8 @@
                     bgImageObject = img;
                     const container = document.getElementById('canvas-container');
                     container.style.backgroundImage = `url(${event.target.result})`;
-                    container.style.backgroundSize = 'cover';
+                    container.style.backgroundSize = 'contain';
+                    container.style.backgroundRepeat = 'no-repeat';
                     draw(); 
                 }
                 img.src = event.target.result;
@@ -151,18 +180,17 @@
         };
 
         function exportarImagem() {
-            // Lógica de exportação mantida
             const exportCanvas = document.createElement('canvas');
             exportCanvas.width = canvas.width; exportCanvas.height = canvas.height;
             const eCtx = exportCanvas.getContext('2d');
-            eCtx.fillStyle = '#0a0a0a'; eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+            eCtx.fillStyle = '#ffffff'; eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height); // Fundo branco na exportação
             if (bgImageObject) {
                 const scale = Math.min(exportCanvas.width / bgImageObject.width, exportCanvas.height / bgImageObject.height);
                 const w = bgImageObject.width * scale; const h = bgImageObject.height * scale;
                 const x = (exportCanvas.width - w) / 2; const y = (exportCanvas.height - h) / 2;
                 eCtx.drawImage(bgImageObject, x, y, w, h);
             } else {
-                eCtx.fillStyle = '#333';
+                eCtx.fillStyle = '#d0d0d0'; // Pontinhos cinzas
                 for (let x = 0; x < exportCanvas.width; x += 20) {
                     for (let y = 0; y < exportCanvas.height; y += 20) {
                         eCtx.beginPath(); eCtx.arc(x, y, 1, 0, Math.PI * 2); eCtx.fill();
@@ -173,7 +201,7 @@
             eCtx.font = 'bold 16px sans-serif'; eCtx.textAlign = 'right';
             const text = 'Simulação - Sys3 Telecom';
             const textWidth = eCtx.measureText(text).width;
-            eCtx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            eCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
             eCtx.beginPath(); eCtx.roundRect(exportCanvas.width - textWidth - 25, exportCanvas.height - 35, textWidth + 20, 30, 6); eCtx.fill();
             eCtx.fillStyle = '#E84818'; eCtx.fillText(text, exportCanvas.width - 15, exportCanvas.height - 15);
             const link = document.createElement('a');
@@ -182,9 +210,8 @@
 
         function gerarPlantaRealista() {
             historicoAcoes = []; bgImageObject = null; 
-            document.getElementById('canvas-container').style.backgroundImage = 'radial-gradient(#333 1px, transparent 1px)';
+            document.getElementById('canvas-container').style.backgroundImage = 'radial-gradient(#d0d0d0 1px, transparent 1px)';
             
-            // Planta mantida
             historicoAcoes = [
                 { type: 'wall', data: { x1: 100, y1: 100, x2: 600, y2: 100, material: 'alvenaria' } }, 
                 { type: 'wall', data: { x1: 100, y1: 100, x2: 100, y2: 350, material: 'alvenaria' } },
@@ -212,7 +239,7 @@
             document.getElementById('setup-modal').style.display = 'none'; draw();
         }
 
-        // LÓGICA MANTIDA (Atenuação, Heatmap, Intersects)
+        // --- MATEMÁTICA E ATENUAÇÃO ---
         function ccw(ax, ay, bx, by, cx, cy) { return (cy - ay) * (bx - ax) > (by - ay) * (cx - ax); }
         function intersects(ax, ay, bx, by, cx, cy, dx, dy) { return ccw(ax, ay, cx, cy, dx, dy) !== ccw(bx, by, cx, cy, dx, dy) && ccw(ax, ay, bx, by, cx, cy) !== ccw(ax, ay, bx, by, dx, dy); }
         function rayIntersectsObject(rx, ry, tx, ty, obj) {
@@ -301,8 +328,8 @@
                     ctx.fillStyle = '#fff'; ctx.font = '22px sans-serif'; ctx.fillText(info.icone, obj.x, obj.y + 2);
                 } else if (item.type === 'label') {
                     ctx.font = 'bold 14px sans-serif'; const textWidth = ctx.measureText(item.data.text).width;
-                    ctx.fillStyle = 'rgba(10, 10, 10, 0.85)'; ctx.beginPath(); ctx.roundRect(item.data.x - textWidth/2 - 8, item.data.y - 12, textWidth + 16, 24, 6); ctx.fill();
-                    ctx.fillStyle = '#fff'; ctx.fillText(item.data.text, item.data.x, item.data.y + 1);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; ctx.beginPath(); ctx.roundRect(item.data.x - textWidth/2 - 8, item.data.y - 12, textWidth + 16, 24, 6); ctx.fill();
+                    ctx.fillStyle = '#111'; ctx.fillText(item.data.text, item.data.x, item.data.y + 1); // Texto escuro para contrastar no branco
                 }
             }
             if (currentWall && currentTool.startsWith('wall-')) {
@@ -311,24 +338,34 @@
             }
         }
 
-        function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); if (routers.length > 0) generateAndDrawHeatmap(); drawElements(); drawRouterIcons(); }
+        function draw() { 
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            if (routers.length > 0) generateAndDrawHeatmap(); 
+            drawElements(); drawRouterIcons(); 
+            atualizarContadorUI();
+        }
 
-        // --- SISTEMA HÍBRIDO DE MOUSE E TOUCH (CELULAR) ---
+        // --- SISTEMA HÍBRIDO DE MOUSE E TOUCH ---
         function getCoordinates(e) {
             const rect = canvas.getBoundingClientRect();
-            // Calcula escala real caso o canvas esteja espremido no celular
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
-            if (e.touches && e.touches.length > 0) {
-                return { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY };
-            }
+            if (e.touches && e.touches.length > 0) { return { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY }; }
             return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
         }
 
         function handleStart(e) {
             if (!e.touches && e.button !== 0) return;
             const pos = getCoordinates(e); const mouseX = pos.x; const mouseY = pos.y;
-            if (currentTool === 'router') { routers.push({ x: mouseX, y: mouseY }); draw(); } 
+            
+            if (currentTool === 'router') { 
+                // AQUI ESTÁ A TRAVA DE SEGURANÇA DOS ROTEADORES!
+                if (routers.length >= maxRouters) {
+                    alert(`Você selecionou o limite de ${maxRouters} roteador(es). Use a ferramenta "Apagar" para remover um, ou inicie um "Novo" projeto.`);
+                    return;
+                }
+                routers.push({ x: mouseX, y: mouseY }); draw(); 
+            } 
             else if (currentTool === 'move') {
                 const hit = getClickedItem(mouseX, mouseY);
                 if (hit) {
@@ -348,7 +385,7 @@
         }
 
         function handleMove(e) {
-            if(isDrawingWall || dragItem) e.preventDefault(); // Evita rolar a tela do celular enquanto desenha
+            if(isDrawingWall || dragItem) e.preventDefault();
             const pos = getCoordinates(e); const mouseX = pos.x; const mouseY = pos.y;
             if (isDrawingWall && currentWall) { currentWall.x2 = mouseX; currentWall.y2 = mouseY; draw(); }
             else if (dragItem && currentTool === 'move') {
@@ -370,16 +407,8 @@
             if (dragItem) { dragItem = null; draw(); }
         }
 
-        // Atrelando os eventos para Mouse
-        canvas.addEventListener('mousedown', handleStart);
-        canvas.addEventListener('mousemove', handleMove);
-        window.addEventListener('mouseup', handleEnd);
-        
-        // Atrelando os eventos para Touch (Celular)
-        canvas.addEventListener('touchstart', handleStart, {passive: false});
-        canvas.addEventListener('touchmove', handleMove, {passive: false});
-        window.addEventListener('touchend', handleEnd);
-
+        canvas.addEventListener('mousedown', handleStart); canvas.addEventListener('mousemove', handleMove); window.addEventListener('mouseup', handleEnd);
+        canvas.addEventListener('touchstart', handleStart, {passive: false}); canvas.addEventListener('touchmove', handleMove, {passive: false}); window.addEventListener('touchend', handleEnd);
         canvas.addEventListener('contextmenu', e => e.preventDefault());
         window.onload = () => document.getElementById('setup-modal').style.display = 'flex';
     </script>
