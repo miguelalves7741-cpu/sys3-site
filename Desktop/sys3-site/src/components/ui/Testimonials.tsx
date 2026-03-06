@@ -80,7 +80,7 @@ export const Testimonials = () => {
         </div>
 
         {/* CARROSSEL DESLIZÁVEL */}
-        <div className="flex overflow-x-auto gap-6 pb-12 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex overflow-x-auto gap-4 md:gap-6 pb-12 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {depoimentos.map((t, i) => (
             <motion.div 
               key={i}
@@ -88,8 +88,8 @@ export const Testimonials = () => {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              // min-w-[90vw] garante o tamanho no celular, md:min-w-[400px] no computador
-              className="min-w-[90vw] md:min-w-[400px] shrink-0 snap-center bg-[#000000]/50 backdrop-blur-md p-10 rounded-3xl border border-[#333333] relative group hover:border-[#E84818]/40 transition-colors flex flex-col h-full cursor-grab active:cursor-grabbing"
+              // A CORREÇÃO ESTÁ AQUI: w-[85vw] força a quebra de texto e o tamanho exato no mobile!
+              className="w-[85vw] sm:w-[320px] md:w-[400px] shrink-0 snap-center bg-[#000000]/50 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-[#333333] relative group hover:border-[#E84818]/40 transition-colors flex flex-col h-full cursor-grab active:cursor-grabbing whitespace-normal"
             >
               {/* Aspas decorativas no fundo */}
               <div className="absolute top-6 right-8 text-[#E84818]/10 group-hover:text-[#E84818]/20 transition-colors pointer-events-none">
